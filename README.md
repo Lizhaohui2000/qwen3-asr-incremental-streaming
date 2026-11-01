@@ -5,6 +5,20 @@ context to 30 seconds, reuses completed encoder windows and decoder KV within
 each epoch, and revises a short text suffix. It uses the Hugging Face model
 backend; it is not wired into the official vLLM demo.
 
+## Motivation
+
+The official streaming path appends each new chunk to `audio_accum` and sends
+the full accumulated waveform to the model again on every update. Old audio is
+never evicted, so the input context grows with session duration and past audio
+is repeatedly processed. This makes each later update handle a longer prefix,
+instead of keeping compute and audio context bounded. The behavior is visible
+in the [official streaming implementation](https://github.com/QwenLM/Qwen3-ASR/blob/main/qwen_asr/inference/qwen3_asr.py)
+and is the issue raised in [Qwen3-ASR issue #199](https://github.com/QwenLM/Qwen3-ASR/issues/199).
+
+This project tests an opt-in Transformers path with a fixed rolling audio
+window and reuse of completed encoder/decoder state. It aims to cap audio
+context while keeping the displayed transcript continuous and revisable.
+
 ## Compared paths
 
 | Path | Audio context | Reuses encoder/decoder state |
