@@ -67,11 +67,12 @@ hypotheses; do not publish it if the underlying evaluation set is private.
 
 On the private 50-clip eval set, corpus CER was 3.709% for official prefix
 replay, 4.004% for 30-second rolling re-decode, and 3.772% for incremental
-cache reuse. Against rolling re-decode, cache reuse cut update P50 from 0.845 s
-to 0.483 s and sampled GPU peak from 12.8 GiB to 2.2 GiB, with 0.232 percentage
-points lower CER. Against official prefix replay, it used less GPU memory but
-was slower (0.483 s vs 0.274 s P50) and had 0.063 percentage points higher CER.
-The 119-second rollover check and full limitations are in
+cache reuse. Against rolling re-decode, cache reuse had 0.483 s vs 0.845 s
+update P50 and 0.232 percentage points lower CER. The sampled GPU peak was 2.2
+vs 12.8 GiB, but this memory comparison is confounded by the different
+Transformers and vLLM backends. Against official prefix replay, it was slower
+(0.483 s vs 0.274 s P50) and had 0.063 percentage points higher CER. The
+119-second rollover check and full limitations are in
 [`reports/eval50.md`](reports/eval50.md).
 
 These are experimental results, not statistical equivalence claims. The

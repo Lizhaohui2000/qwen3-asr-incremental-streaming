@@ -20,12 +20,13 @@
 | Encoder-block + decoder-KV reuse | 3.772% (179/4,745) | 0.483 / 0.601 s | 0.248 | **2,223 MiB** | **2,287 / 2,281 MiB** |
 
 All three paths completed 747 updates with no update exceeding two seconds.
-Against rolling re-decode, the incremental path reduced update P50 by 43% and
-RTF by 43%, with 0.232 percentage points lower corpus CER. Against official
-prefix replay, it used much less measured GPU memory but was slower (P50 0.483
-vs 0.270 s) and had 0.063 percentage points higher CER. These are descriptive
-results on this eval set, not evidence that the incremental method improves
-recognition accuracy.
+Against rolling re-decode, the incremental path had 43% lower update P50 and
+RTF, with 0.232 percentage points lower corpus CER. Its measured GPU peak was
+2,223 vs 12,811 MiB, but that memory comparison is confounded by the different
+vLLM and Transformers backends. Against official prefix replay, it was slower
+(P50 0.483 vs 0.274 s) and had 0.063 percentage points higher CER. These are
+descriptive results on this eval set, not evidence that cache reuse improves
+recognition accuracy or caused the measured memory difference.
 
 Each clip starts a fresh stream, so this table measures per-clip recognition and
 runtime, not unbounded-session growth. The official path's host peak was sampled
