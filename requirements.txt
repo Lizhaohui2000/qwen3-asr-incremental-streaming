@@ -1,0 +1,5 @@
+qwen-asr==0.0.6
+transformers==4.57.3
+numpy
+soundfile
+psutil>=5.9

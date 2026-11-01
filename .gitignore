@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+*.wav
+*.flac
+*.mp3
+*.safetensors
+*.pt
+*.pth
+models/
+data/
+outputs/
+*.log
+reports/*.json
+reports/*.jsonl
+manifest*.jsonl
